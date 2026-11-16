@@ -1,0 +1,442 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080808">
+  <meta name="description" content="This page could not be found.">
+  <title>404 — Scythe</title>
+
+  <link rel="icon" type="image/png" sizes="256x256" href="/assets/favicon.png">
+  <link rel="apple-touch-icon" href="/assets/favicon.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --black: #080808;
+      --red: #a90d20;
+      --silver: #c9c9c9;
+      --muted: #696969;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      min-height: 100%;
+    }
+
+    body {
+      min-height: 100vh;
+      overflow: hidden;
+      color: #eee;
+      background: var(--black);
+      font-family: Inter, sans-serif;
+      cursor: crosshair;
+    }
+
+    .background {
+      position: fixed;
+      inset: 0;
+      z-index: -3;
+      background:
+        radial-gradient(
+          ellipse at 50% 48%,
+          rgba(105, 0, 16, .12),
+          transparent 56%
+        ),
+        #080808;
+    }
+
+    .grid {
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      background-image:
+        linear-gradient(rgba(255,255,255,.022) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.022) 1px, transparent 1px);
+      background-size: 68px 68px;
+      -webkit-mask-image:
+        radial-gradient(ellipse at center, #000, transparent 84%);
+      mask-image:
+        radial-gradient(ellipse at center, #000, transparent 84%);
+    }
+
+    .grain {
+      position: fixed;
+      inset: -50%;
+      z-index: 5;
+      width: 200%;
+      height: 200%;
+      pointer-events: none;
+      opacity: .035;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.6'/%3E%3C/svg%3E");
+      animation: grain .3s steps(2) infinite;
+    }
+
+    .mouse-light {
+      position: fixed;
+      z-index: -1;
+      width: 420px;
+      height: 420px;
+      border-radius: 50%;
+      pointer-events: none;
+      background: radial-gradient(
+        circle,
+        rgba(150,0,20,.085),
+        transparent 70%
+      );
+      transform: translate(-50%, -50%);
+    }
+
+    header {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 27px 5.5%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      animation: fade-down 1s ease both;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      width: 58px;
+      height: 58px;
+    }
+
+    .brand img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .header-status {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #777;
+      font: 9px "Space Mono", monospace;
+      letter-spacing: 2px;
+    }
+
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--red);
+      box-shadow: 0 0 12px rgba(169,13,32,.8);
+      animation: pulse 1.8s ease-in-out infinite;
+    }
+
+    main {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 110px 22px;
+      text-align: center;
+    }
+
+    .content {
+      width: 100%;
+      max-width: 1100px;
+      animation: reveal 1.35s cubic-bezier(.2,.8,.2,1) both;
+    }
+
+    .wordmark {
+      position: relative;
+      display: inline-block;
+      overflow: hidden;
+    }
+
+    h1 {
+      color: transparent;
+      background: linear-gradient(
+        180deg,
+        #f2f2f2 0%,
+        #bdbdbd 43%,
+        #777 78%,
+        #d8d8d8 100%
+      );
+      background-clip: text;
+      -webkit-background-clip: text;
+      font-size: clamp(100px, 17vw, 210px);
+      font-weight: 900;
+      line-height: .95;
+      letter-spacing: -.075em;
+      user-select: none;
+      filter: drop-shadow(0 12px 34px rgba(0,0,0,.75));
+    }
+
+    .wordmark::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -85%;
+      width: 38%;
+      height: 100%;
+      background: linear-gradient(
+        100deg,
+        transparent,
+        rgba(255,255,255,.17),
+        transparent
+      );
+      transform: skewX(-20deg);
+      animation: shine 7s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    .accent-line {
+      width: 58px;
+      height: 2px;
+      margin: 34px auto 30px;
+      background: var(--red);
+      box-shadow: 0 0 18px rgba(169,13,32,.65);
+    }
+
+    .error-title {
+      color: #dedede;
+      font-size: clamp(13px, 2vw, 16px);
+      font-weight: 700;
+      letter-spacing: 5px;
+      margin-bottom: 15px;
+    }
+
+    .description {
+      color: #777;
+      font: 10px "Space Mono", monospace;
+      letter-spacing: 1.5px;
+      line-height: 2;
+      margin: 0 auto;
+      max-width: 440px;
+    }
+
+    .home-button {
+      display: inline-flex;
+      text-decoration: none;
+      align-items: center;
+      gap: 12px;
+      margin-top: 30px;
+      padding: 13px 21px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.025);
+      color: #c5c5c5;
+      font: 10px "Space Mono", monospace;
+      letter-spacing: 3px;
+      transition:
+        border-color .25s ease,
+        background .25s ease,
+        box-shadow .25s ease;
+    }
+
+    .home-button:hover {
+      border-color: rgba(169,13,32,.7);
+      background: rgba(169,13,32,.055);
+      box-shadow: 0 0 28px rgba(169,13,32,.08);
+    }
+
+    .home-button span {
+      color: var(--red);
+    }
+
+    footer {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      padding: 25px 5.5%;
+      color: #666;
+      font: 9px "Space Mono", monospace;
+      letter-spacing: 1.5px;
+    }
+
+    footer span {
+      color: var(--red);
+    }
+
+    .corner {
+      position: absolute;
+      width: 22px;
+      height: 22px;
+      opacity: .27;
+    }
+
+    .top-left {
+      top: 14%;
+      left: 5.5%;
+      border-top: 1px solid #aaa;
+      border-left: 1px solid #aaa;
+    }
+
+    .top-right {
+      top: 14%;
+      right: 5.5%;
+      border-top: 1px solid #aaa;
+      border-right: 1px solid #aaa;
+    }
+
+    .bottom-left {
+      bottom: 14%;
+      left: 5.5%;
+      border-bottom: 1px solid #aaa;
+      border-left: 1px solid #aaa;
+    }
+
+    .bottom-right {
+      right: 5.5%;
+      bottom: 14%;
+      border-right: 1px solid #aaa;
+      border-bottom: 1px solid #aaa;
+    }
+
+    @keyframes pulse {
+      50% {
+        opacity: .35;
+        box-shadow: 0 0 3px var(--red);
+      }
+    }
+
+    @keyframes shine {
+      0%, 66% { left: -85%; }
+      100% { left: 145%; }
+    }
+
+    @keyframes reveal {
+      from {
+        opacity: 0;
+        transform: translateY(22px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fade-down {
+      from {
+        opacity: 0;
+        transform: translateY(-12px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes grain {
+      0% { transform: translate(0,0); }
+      25% { transform: translate(2%,-2%); }
+      50% { transform: translate(-2%,2%); }
+      75% { transform: translate(2%,2%); }
+      100% { transform: translate(-2%,-2%); }
+    }
+
+    @media (max-width: 600px) {
+      header { padding: 22px 7%; }
+      .brand { width: 46px; height: 46px; }
+      .header-status {
+        font-size: 8px;
+        letter-spacing: 1.5px;
+      }
+      h1 {
+        font-size: 23vw;
+        letter-spacing: -.07em;
+      }
+      .home-button {
+        padding: 12px 16px;
+        font-size: 9px;
+      }
+      .description {
+        font-size: 9px;
+        padding: 0 10px;
+      }
+      footer {
+        padding: 22px 7%;
+        font-size: 8px;
+      }
+      .corner {
+        width: 15px;
+        height: 15px;
+      }
+      .top-left, .top-right { top: 16%; }
+      .bottom-left, .bottom-right { bottom: 16%; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="background"></div>
+  <div class="grid"></div>
+  <div class="grain"></div>
+  <div class="mouse-light" id="mouseLight" aria-hidden="true"></div>
+
+  <header>
+    <a class="brand" href="/" aria-label="Scythe home">
+      <img src="/assets/scythe-badge.png" alt="Scythe badge">
+    </a>
+
+    <div class="header-status">
+      <span class="status-dot"></span>
+      SYSTEM ERROR
+    </div>
+  </header>
+
+  <div class="corner top-left"></div>
+  <div class="corner top-right"></div>
+  <div class="corner bottom-left"></div>
+  <div class="corner bottom-right"></div>
+
+  <main>
+    <section class="content" aria-label="Scythe page not found">
+      <div class="wordmark">
+        <h1>404</h1>
+      </div>
+
+      <div class="accent-line"></div>
+
+      <h2 class="error-title">PAGE NOT FOUND</h2>
+
+      <p class="description">
+        The page you're looking for doesn't exist,
+        has been moved, or is no longer available.
+      </p>
+
+      <a class="home-button" href="/">
+        <span>✳</span>
+        RETURN TO HOMEPAGE
+        <span>✳</span>
+      </a>
+    </section>
+  </main>
+
+  <footer>© SCYTHE OPTIMIZATIONS <span>2026</span></footer>
+
+  <script>
+    const light = document.getElementById("mouseLight");
+
+    document.addEventListener("mousemove", (event) => {
+      light.style.left = event.clientX + "px";
+      light.style.top = event.clientY + "px";
+    });
+  </script>
+</body>
+</html>
